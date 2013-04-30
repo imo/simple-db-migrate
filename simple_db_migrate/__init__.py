@@ -45,7 +45,9 @@ def run(options):
         config.update('database_user', options.get('database_user'))
         config.update('database_password', options.get('database_password'))
         config.update('database_host', options.get('database_host'))
+        config.update('database_port', options.get('database_port'))
         config.update('database_name', options.get('database_name'))
+
         if options.get('database_migrations_dir'):
             config.update("database_migrations_dir", Config._parse_migrations_dir(options.get('database_migrations_dir')))
 
@@ -66,12 +68,8 @@ def run(options):
 
         # Ask the password for user if configured
         if config.get('database_password') == '<<ask_me>>':
-            if options.get('password'):
-                passwd = options.get('password')
-            else:
-                CLI.msg('\nPlease inform password to connect to database "%s@%s:%s"' % (config.get('database_user'), config.get('database_host'), config.get('database_name')))
-                passwd = getpass()
-            config.update('database_password', passwd)
+            CLI.msg('\nPlease inform password to connect to database "%s@%s:%s"' % (config.get('database_user'), config.get('database_host'), config.get('database_name')))
+            config.update('database_password', getpass())
 
         # If CLI was correctly parsed, execute db-migrate.
         Main(config).execute()

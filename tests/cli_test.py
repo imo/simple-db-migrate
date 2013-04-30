@@ -138,12 +138,6 @@ class CLITest(unittest.TestCase):
     def test_it_should_accept_label_version_options(self):
         self.assertEqual("label_version_value", CLI.parse(["--label", "label_version_value"])[0].label_version)
 
-    def test_it_should_not_has_a_default_value_for_password(self):
-        self.assertEqual(None, CLI.parse([])[0].password)
-
-    def test_it_should_accept_password_options(self):
-        self.assertEqual("password_value", CLI.parse(["--password", "password_value"])[0].password)
-
     def test_it_should_has_a_default_value_for_environment(self):
         self.assertEqual("", CLI.parse([])[0].environment)
 
@@ -178,20 +172,26 @@ class CLITest(unittest.TestCase):
     def test_it_should_not_has_a_default_value_for_database_password(self):
         self.assertEqual(None, CLI.parse([])[0].database_password)
 
-    def test_it_should_accept_database_password_options(self):
-        self.assertEqual("password_value", CLI.parse(["--db-password", "password_value"])[0].database_password)
-
     def test_it_should_not_has_a_default_value_for_database_host(self):
         self.assertEqual(None, CLI.parse([])[0].database_host)
 
     def test_it_should_accept_database_host_options(self):
         self.assertEqual("host_value", CLI.parse(["--db-host", "host_value"])[0].database_host)
 
+    def test_it_should_not_has_a_default_value_for_database_port(self):
+        self.assertEqual(None, CLI.parse([])[0].database_port)
+
+    def test_it_should_accept_database_host_options(self):
+        self.assertEqual(42, CLI.parse(["--db-port", "42"])[0].database_port)
+
     def test_it_should_not_has_a_default_value_for_database_name(self):
         self.assertEqual(None, CLI.parse([])[0].database_name)
 
     def test_it_should_accept_database_name_options(self):
         self.assertEqual("name_value", CLI.parse(["--db-name", "name_value"])[0].database_name)
+
+    def test_it_should_accept_database_password_options(self):
+        self.assertEqual("password_value", CLI.parse(["--db-password", "password_value"])[0].database_password)
 
     def test_it_should_not_has_a_default_value_for_migrations_dir(self):
         self.assertEqual(None, CLI.parse([])[0].database_migrations_dir)

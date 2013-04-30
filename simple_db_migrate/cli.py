@@ -110,11 +110,6 @@ class CLI(object):
                 default=None,
                 help="Give this label the migrations executed or execute a down to him."),
 
-        make_option("--password",
-                dest="password",
-                default=None,
-                help="Use this password to connect to database, to auto."),
-
         make_option("--env", "--environment",
                 dest="environment",
                 default="",
@@ -150,6 +145,11 @@ class CLI(object):
                 dest="database_host",
                 default=None,
                 help="Set the host where the database is."),
+
+        make_option("--db-port",
+                dest="database_port",
+                type="int",
+                help="Set the port where the database is."),
 
         make_option("--db-name",
                 dest="database_name",

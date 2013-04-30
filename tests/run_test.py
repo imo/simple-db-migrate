@@ -191,7 +191,7 @@ DATABASE_OTHER_CUSTOM_VARIABLE = 'Value'
     @patch.object(simple_db_migrate.main.Main, '__init__', return_value=None)
     @patch.object(simple_db_migrate.helpers.Utils, 'get_variables_from_file', return_value = {'DATABASE_HOST':'host', 'DATABASE_USER': 'root', 'DATABASE_PASSWORD':'<<ask_me>>', 'DATABASE_NAME':'database', 'DATABASE_MIGRATIONS_DIR':'.'})
     def test_it_should_use_password_from_command_line_when_configuration_is_as_ask_me(self, import_file_mock, main_mock, execute_mock):
-        simple_db_migrate.run_from_argv(["-c", os.path.abspath('sample.conf'), '--password', 'xpto_pass'])
+        simple_db_migrate.run_from_argv(["-c", os.path.abspath('sample.conf'), '--db-password', 'xpto_pass'])
         config_used = main_mock.call_args[0][0]
         self.assertEqual('xpto_pass', config_used.get('database_password'))
 
