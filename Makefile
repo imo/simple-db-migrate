@@ -42,3 +42,11 @@ dist: clean
 
 publish: dist
 	@python setup.py sdist upload
+
+imo-pkg:
+	@VERSION="$(shell gawk '/SIMPLE_DB_MIGRATE_VERSION/ { print substr($$3, 2, length($$3) - 2); exit; }' simple_db_migrate/__init__.py)"; \
+	BASE=simple-db-migrate-$$VERSION; \
+	TARGET=/tmp/simple-db-migrate-$$VERSION.tar.gz; \
+	git archive --format=tar --prefix=$$BASE/ HEAD | \
+	  gzip > $$TARGET; \
+	echo "Created $$TARGET"
