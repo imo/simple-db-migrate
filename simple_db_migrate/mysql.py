@@ -42,7 +42,11 @@ class MySQL(object):
         cursor = db.cursor()
         cursor._defer_warnings = True
         curr_statement = None
+        no_transaction = sql.find("-- NO_TRANSACTION --") != -1
         try:
+            if no_transaction:
+                db.autocommit(True)
+
             statments = MySQL._parse_sql_statements(sql)
             if len(sql.strip(' \t\n\r')) != 0 and len(statments) == 0:
                 raise Exception("invalid sql syntax '%s'" % sql)
@@ -58,7 +62,9 @@ class MySQL(object):
             db.rollback()
             raise MigrationException("error executing migration: %s" % e, curr_statement)
         finally:
+            db.autocommit(False)
             db.close()
+
 
     def __change_db_version(self, version, migration_file_name, sql_up, sql_down, up=True, execution_log=None, label_version=None):
         if up:
@@ -209,3 +215,4 @@ class MySQL(object):
         cursor.close()
         db.close()
         return migrations
+
